@@ -1,55 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="image/png" href="images/logo.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AR Mouse Interaction</title>
+    <title>Race Fast & Furious</title>
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.0/dist/aframe-extras.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 </head>
-<body style="margin: 0; overflow: hidden;">
+<body>
+
     <a-scene embedded arjs="detectionMode: mono_and_matrix; matrixCodeType: 3x3_PARITY65">
         <a-marker type="pattern" url="patt/pattern-kaidopurple.patt">
             <a-gltf-model id="car1" src="RX7/scene.gltf" position="0 0 0" scale="0.5 0.5 0.5"></a-gltf-model>
-            <a-gltf-model id="car2" src="Supra/scene.gltf" position="1.2 0 0" scale="0.5 0.5 0.5" rotation="0 180 0">
-            </a-gltf-model>
+            <a-gltf-model id="car2" src="Supra/scene.gltf" position="1.2 0 0" scale="0.5 0.5 0.5" rotation="0 180 0"></a-gltf-model>
             <a-gltf-model id="road" src="road_hd/scene.gltf" position="3 0 0" scale="0.3 0.3 0.3"></a-gltf-model>
         </a-marker>
-        <a-camera id="cam">
+        <a-camera>
             <a-cursor></a-cursor>
         </a-camera>
     </a-scene>
+
     <script>
-        let car1TargetZ = 0; 
-        let car2TargetZ = 0; 
         let isMoving = false;
 
         function moveCars() {
             const car1 = document.querySelector('#car1');
             const car2 = document.querySelector('#car2');
 
-            if (car1) {
+            if (car1 && car2) {
                 const car1Pos = car1.object3D.position;
+                const car2Pos = car2.object3D.position;
+
                 if (isMoving) {
                     car1Pos.z += 0.1;
-                }
-            }
-
-            if (car2) {
-                const car2Pos = car2.object3D.position;
-                if (isMoving) {
-                    car2Pos.z += 0.2; 
+                    car2Pos.z += 0.2;
                 }
             }
             requestAnimationFrame(moveCars);
         }
-        document.addEventListener('click', () => {
+
+        // Event untuk klik pada layar
+        document.body.addEventListener('click', () => {
             isMoving = !isMoving;
         });
 
         moveCars();
     </script>
+
 </body>
 </html>
